@@ -1,7 +1,12 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import RecipeChat from "./RecipeChat";
 import { AuthContext } from "../context/authContext";
+
+vi.mock("../services/gemini", () => ({
+  extractRecipeFromImage: vi.fn(),
+  sendRecipeChatMessage: vi.fn(),
+}));
 
 describe("RecipeChat", () => {
   it("disables chat and image-import launch buttons when no user is authenticated", () => {

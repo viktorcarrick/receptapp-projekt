@@ -122,11 +122,11 @@ export default function AddRecipePage() {
     };
   return (
     <div className="mx-auto flex min-h-full w-full min-w-0 flex-1 flex-col">
-      <article className={`mx-auto w-full max-w-6xl flex-1 rounded-md border border-app-border bg-app-surface p-5 text-left shadow-[0_1px_3px_rgba(120,80,40,0.12)] transition-[width] duration-200 ease-out sm:p-8 ${chatOpen ? "lg:w-[calc(100%_-_22rem)] lg:flex-none" : "lg:w-[calc(100%_-_8rem)] lg:flex-none"}`}>
+      <article className={`mx-auto w-full max-w-6xl flex-1 rounded-md border border-app-border bg-app-surface p-5 text-left shadow-[0_1px_3px_rgba(120,80,40,0.12)] transition-[width] duration-200 ease-out sm:p-8 ${chatOpen ? "lg:w-[calc(100%-22rem)] lg:flex-none" : "lg:w-[calc(100%-8rem)] lg:flex-none"}`}>
         <header className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-app-border-soft pb-5">
           <div>
             <h1 className="m-0 text-4xl font-semibold text-app-ink">Lägg till recept</h1>
-            <p className="mt-2 text-sm text-app-muted">Fyll i manuellt, generera det med Botlas <BsRobot className="inline-block align-middle text-lg" aria-hidden="true" /> eller importera ett fysiskt recept med <LuScanText className="inline-block align-middle text-lg" aria-hidden="true" />.</p>
+            <p className="mt-2 text-sm text-app-muted">Fyll i manuellt, generera ett recept med hjälp av Botlas <BsRobot className="inline-block align-middle text-lg" aria-hidden="true" /> eller importera ett fysiskt recept med <LuScanText className="inline-block align-middle text-lg" aria-hidden="true" />.</p>
           </div>
           <GenericButton
             to="/alla-recept"

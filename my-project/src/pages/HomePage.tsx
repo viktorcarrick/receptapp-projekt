@@ -45,18 +45,18 @@ export default function HomePage() {
     };
 
     return (
-        <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-8 px-4 py-8">
-            <section className="app-content-enter w-full rounded-xl border border-app-border bg-app-surface/90 p-6 text-left shadow-[0_1px_3px_rgba(120,80,40,0.12)] sm:p-10">
+        <div className="mx-auto flex max-w-5xl flex-1 flex-col items-center justify-center gap-8 px-4 py-8">
+            <section className="app-content-enter justify-items-center w-full rounded-xl border border-app-border bg-app-surface/90 p-6 text-left shadow-[0_1px_3px_rgba(120,80,40,0.12)] sm:p-10">
                 <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-brand-olive">
                     {userName ? `Välkommen tillbaka, ${userName}` : "Välkommen till Receptappen"}!
                 </p>
                 <h1 className="text-4xl font-semibold tracking-tight text-app-ink sm:text-5xl mb-2">
-                    Vad ska vi laga idag?
+                    Vad blir det för gott idag?
                 </h1>
                 <p className="mt-4 max-w-2xl text-app-muted">
-                    Samla dina favoritrecept, skapa nya och bygg en lista för veckans matlagning.
+                    Samla dina favoritrecept, upptäck nya favoriter och planera veckans måltider. Allt på ett och samma ställe.
                 </p>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-8 flex flex-wrap gap-3 mb-8">
                     <GenericButton
                         to="/lagg-till-recept"
                         label="Skapa recept"
@@ -80,18 +80,12 @@ export default function HomePage() {
                         className="min-h-12 px-5"
                     />
                 </div>
-            </section>
-            <section className="app-content-enter w-full rounded-xl border border-app-border bg-app-surface/90 p-6 text-center shadow-[0_1px_3px_rgba(120,80,40,0.12)] sm:p-8">
                 {authLoading ? (
                     <LoadingSpinner label="Laddar..." className="py-2" />
                 ) : user ? (
                     <>
-                        <h2 className="text-2xl font-semibold tracking-tight text-app-ink">
-                            Välkommen tillbaka{userName ? `, ${userName}` : ""}!
-                        </h2>
                         <p className="mt-2 text-app-muted">
                             Strul? Maila vaktmästare/CEO/utvecklare/receptmästare på viktor.carrick00@gmail.com
-                            <br />Dricks tas emot i formen av öl, monster eller småmynt.
                         </p>
                     </>
                 ) : (

@@ -179,7 +179,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
         >
           <header className="flex items-center justify-between bg-brand-forest px-4 py-3 text-white">
             <div className="flex items-center gap-2">
-              <LuScanText aria-hidden="true" className="text-xl" />
+              <BsRobot aria-hidden="true" className="text-xl" />
               <h2 className="m-0 text-lg font-semibold">Botlas Ekstedt</h2>
             </div>
             <button
@@ -224,7 +224,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
             ))}
             {isSending && (
               <p className={`${chatBubbleClassName} self-start bg-app-canvas text-app-muted`}>
-                Tänker...
+                Bläddrar i kokboken...
               </p>
             )}
             {errorMessage && (

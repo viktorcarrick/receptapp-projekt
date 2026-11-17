@@ -39,6 +39,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
   const galleryInputRef = useRef<HTMLInputElement>(null);
   const importMenuRef = useRef<HTMLElement>(null);
   const importButtonRef = useRef<HTMLButtonElement>(null);
+  const aiControlsDisabled = authLoading || !user;
 
   const changeOpenState = (open: boolean) => {
     setIsOpen(open);
@@ -162,6 +163,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
         capture="environment"
         className="hidden"
         aria-label="Ta foto av recept"
+        disabled={aiControlsDisabled || isImporting}
         onChange={(event) => void handleImageSelected(event)}
       />
       <input
@@ -170,12 +172,13 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
         accept="image/*"
         className="hidden"
         aria-label="Välj receptbild från bildgalleriet"
+        disabled={aiControlsDisabled || isImporting}
         onChange={(event) => void handleImageSelected(event)}
       />
       {isOpen && (
         <section
           aria-label="Chatt med roboten"
-          className="fixed bottom-24 right-4 z-[60] flex h-[min(28rem,calc(100vh_-_8rem))] w-[min(22rem,calc(100vw_-_2rem))] flex-col overflow-hidden rounded-xl border border-app-border bg-app-surface text-left shadow-xl lg:bottom-4 lg:right-4"
+          className="fixed bottom-24 right-4 z-60 flex h-[min(28rem,calc(100vh-8rem))] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl border border-app-border bg-app-surface text-left shadow-xl lg:bottom-4 lg:right-4"
         >
           <header className="flex items-center justify-between bg-brand-forest px-4 py-3 text-white">
             <div className="flex items-center gap-2">
@@ -240,12 +243,12 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
               placeholder="Skriv ett meddelande..."
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
-              disabled={isSending}
+              disabled={isSending || aiControlsDisabled}
             />
             <button
               type="submit"
               className={`rounded-md bg-brand-tomato px-3 py-2 text-sm font-medium text-white hover:bg-brand-tomato-hover ${disabledButtonClassName}`}
-              disabled={isSending || !draft.trim()}
+              disabled={isSending || !draft.trim() || aiControlsDisabled}
             >
               {isSending ? "Skickar..." : "Skicka"}
             </button>
@@ -258,7 +261,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
             <section
               ref={importMenuRef}
               aria-label="Importera recept från bild"
-              className="fixed right-4 bottom-52 z-[60] flex w-[min(22rem,calc(100vw_-_2rem))] flex-col gap-3 rounded-xl border border-app-border bg-app-surface p-4 text-left shadow-xl"
+              className="fixed right-4 bottom-52 z-60 flex w-[min(22rem,calc(100vw-2rem))] flex-col gap-3 rounded-xl border border-app-border bg-app-surface p-4 text-left shadow-xl"
             >
               <h2 className="m-0 text-base font-semibold text-app-ink">
                 Importera recept från bild
@@ -268,7 +271,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
                 type="button"
                 className={`rounded-md bg-brand-tomato px-4 py-3 text-sm font-medium text-white hover:bg-brand-tomato-hover enabled:cursor-pointer ${disabledButtonClassName}`}
                 onClick={() => cameraInputRef.current?.click()}
-                disabled={isImporting}
+                disabled={isImporting || aiControlsDisabled}
               >
                 Ta foto
               </button>
@@ -276,7 +279,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
                 type="button"
                 className={`rounded-md border border-app-border px-4 py-3 text-sm font-medium text-app-ink hover:bg-app-canvas enabled:cursor-pointer ${disabledButtonClassName}`}
                 onClick={() => galleryInputRef.current?.click()}
-                disabled={isImporting}
+                disabled={isImporting || aiControlsDisabled}
               >
                 Välj från bildgalleriet
               </button>
@@ -301,8 +304,8 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
               setImportErrorMessage("");
               setIsImportMenuOpen((open) => !open);
             }}
-            disabled={isImporting}
-            className="fixed bottom-28 right-4 z-[60] ml-6 flex h-20 w-20 items-center justify-center rounded-full bg-brand-tomato text-white shadow-lg transition-transform hover:scale-105 enabled:cursor-pointer disabled:cursor-wait disabled:opacity-70"
+            disabled={isImporting || aiControlsDisabled}
+            className="fixed bottom-28 right-4 z-60 ml-6 flex h-20 w-20 items-center justify-center rounded-full bg-brand-tomato text-white shadow-lg transition-transform hover:scale-105 enabled:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
           >
             <LuScanText aria-hidden="true" className="text-5xl" />
           </button>
@@ -311,7 +314,8 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
             aria-label="Öppna receptchatten"
             aria-expanded={isOpen}
             onClick={() => changeOpenState(true)}
-            className="fixed bottom-4 right-4 z-[60] ml-6 flex h-20 w-20 items-center justify-center rounded-full bg-brand-forest text-white shadow-lg transition-transform hover:scale-105 cursor-pointer"
+            disabled={aiControlsDisabled}
+            className="fixed bottom-4 right-4 z-60 ml-6 flex h-20 w-20 items-center justify-center rounded-full bg-brand-forest text-white shadow-lg transition-transform hover:scale-105 enabled:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
           >
             <BsRobot aria-hidden="true" className="text-5xl" />
           </button>

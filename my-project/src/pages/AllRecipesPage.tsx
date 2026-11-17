@@ -9,6 +9,7 @@ import GenericButton from "../components/GenericButton";
 import Modal from "../components/Modal";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useAuth } from "../context/useAuth";
+import AddRecipeToListsPopup from "../components/AddRecipeToListsPopup";
 
 export default function AllRecipesPage() {
   const { user, isLoading: authLoading } = useAuth();
@@ -23,6 +24,8 @@ export default function AllRecipesPage() {
   const [isClosingDeleteConfirmation, setIsClosingDeleteConfirmation] = useState(false);
   const [deletingRecipes, setDeletingRecipes] = useState(false);
   const [deleteErrorMessage, setDeleteErrorMessage] = useState<string | null>(null);
+  const [recipeForLists, setRecipeForLists] = useState<Recipe | null>(null);
+  const [listSuccessMessage, setListSuccessMessage] = useState<string | null>(null);
 
   const requestCloseDeleteConfirmation = () => setIsClosingDeleteConfirmation(true);
   useEscapeKey(
@@ -149,6 +152,11 @@ export default function AllRecipesPage() {
           <FaSearch className="mr-2 scale-x-[-1]" />
           <span>Hitta ett recept</span>
         </div>
+        {listSuccessMessage && (
+          <p role="status" className="mb-2 text-sm text-app-ink">
+            {listSuccessMessage}
+          </p>
+        )}
         <input
           className="mb-2 w-full rounded-md bg-white/90 px-3 py-2 text-app-subtle outline-1 -outline-offset-1 outline-brand-olive focus:outline-2 focus:-outline-offset-2 focus:outline-brand-tomato"
           type="text"
@@ -169,6 +177,10 @@ export default function AllRecipesPage() {
               editState={editListMode}
               selectedRecipeIds={selectedRecipeIds}
               onRecipeSelectionChange={handleRecipeSelectionChange}
+              onAddToList={(recipe) => {
+                setListSuccessMessage(null);
+                setRecipeForLists(recipe);
+              }}
             />
           </div>
         ) : (
@@ -212,6 +224,17 @@ export default function AllRecipesPage() {
               />
             </div>
         </Modal>
+      )}
+      {recipeForLists && (
+        <AddRecipeToListsPopup
+          key={recipeForLists.id}
+          recipe={recipeForLists}
+          onClose={() => setRecipeForLists(null)}
+          onRecipesAdded={(listCount) => {
+            const listLabel = listCount === 1 ? "lista" : "listor";
+            setListSuccessMessage(`Receptet lades till i ${listCount} ${listLabel}.`);
+          }}
+        />
       )}
     </div>
   )

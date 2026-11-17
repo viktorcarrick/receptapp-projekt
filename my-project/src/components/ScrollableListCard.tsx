@@ -9,6 +9,7 @@ type ScrollableListCardProps = {
   editState?: boolean
   selectedRecipeIds?: Set<string>
   onRecipeSelectionChange?: (recipeId: string, selected: boolean) => void
+  onAddToList: (recipe: Recipe) => void
 }
 
 const EMPTY_SELECTED_RECIPE_IDS = new Set<string>();
@@ -23,6 +24,7 @@ export default function ScrollableListCard({
   editState,
   selectedRecipeIds = EMPTY_SELECTED_RECIPE_IDS,
   onRecipeSelectionChange,
+  onAddToList,
 }: ScrollableListCardProps) {
   const location = useLocation();
 
@@ -60,14 +62,19 @@ export default function ScrollableListCard({
             </td>
             <td className={`w-36 min-w-[9rem] ${tableCellClassName}`}>
               <div className="grid place-items-center">
-                <div
-                  className={`col-start-1 row-start-1 transition-[opacity,transform] duration-200 ease-in-out ${
+                <button
+                  type="button"
+                  aria-label={`Lägg till ${recipe.name} i listor`}
+                  aria-hidden={editState}
+                  tabIndex={editState ? -1 : 0}
+                  disabled={editState}
+                  onClick={() => onAddToList(recipe)}
+                  className={`col-start-1 row-start-1 flex items-center justify-center rounded-full text-3xl text-brand-olive transition-all duration-200 ease-in-out hover:scale-110 hover:text-brand-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-forest enabled:cursor-pointer disabled:cursor-not-allowed ${
                     editState ? "pointer-events-none translate-y-1 opacity-0" : "translate-y-0 opacity-100"
                   }`}
-                  aria-hidden={editState}
                 >
-                  <MdPlaylistAddCircle className="cursor-pointer text-3xl text-brand-olive transition-all duration-200 hover:scale-110 hover:text-brand-tomato" />
-                </div>
+                  <MdPlaylistAddCircle aria-hidden="true" />
+                </button>
                 <label
                   className={`col-start-1 row-start-1 flex cursor-pointer items-center justify-center transition-[opacity,transform] duration-200 ease-in-out ${
                     editState ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-1 opacity-0"

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: my-project/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: my-project
+
+      - name: Run tests
+        run: npm test
+        working-directory: my-project
+
+      - name: Lint
+        run: npm run lint
+        working-directory: my-project
+
+      - name: Build
+        run: npm run build
+        working-directory: my-project

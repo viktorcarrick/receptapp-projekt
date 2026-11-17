@@ -285,7 +285,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
               </button>
               {isImporting && (
                 <p role="status" className="m-0 text-sm text-app-muted">
-                  Läser och tolkar receptbilden...
+                  Läser och tolkar receptbilden....
                 </p>
               )}
               {importErrorMessage && (

@@ -305,7 +305,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
               setIsImportMenuOpen((open) => !open);
             }}
             disabled={isImporting || aiControlsDisabled}
-            className="fixed bottom-28 right-4 z-60 ml-6 flex h-20 w-20 items-center justify-center rounded-full bg-brand-tomato text-white shadow-lg transition-transform hover:scale-105 enabled:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+            className="fixed bottom-28 right-4 z-60 flex h-20 w-20 items-center justify-center rounded-full bg-brand-tomato text-white shadow-lg transition-transform hover:scale-105 enabled:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
           >
             <LuScanText aria-hidden="true" className="text-5xl" />
           </button>
@@ -315,7 +315,7 @@ export default function RecipeChat({ onOpenChange, onRecipeGenerated }: RecipeCh
             aria-expanded={isOpen}
             onClick={() => changeOpenState(true)}
             disabled={aiControlsDisabled}
-            className="fixed bottom-4 right-4 z-60 ml-6 flex h-20 w-20 items-center justify-center rounded-full bg-brand-forest text-white shadow-lg transition-transform hover:scale-105 enabled:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+            className="fixed bottom-4 right-4 z-60 flex h-20 w-20 items-center justify-center rounded-full bg-brand-forest text-white shadow-lg transition-transform hover:scale-105 enabled:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
           >
             <BsRobot aria-hidden="true" className="text-5xl" />
           </button>

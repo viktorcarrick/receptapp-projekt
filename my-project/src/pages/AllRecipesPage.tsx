@@ -114,8 +114,8 @@ export default function AllRecipesPage() {
   }
 
   return (
-    <div className="mx-auto w-full min-w-0 max-w-full px-4">
-      <section className="w-full min-w-0">
+    <div className="mx-auto flex w-full min-w-0 max-w-full flex-col gap-4 px-4">
+      <section className="flex w-full min-w-0 flex-col gap-3">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h1 className="text-4xl font-semibold text-app-ink">Alla recept</h1>
           <div className="flex flex-wrap items-center justify-end gap-4">
@@ -148,28 +148,28 @@ export default function AllRecipesPage() {
             />
           </div>
         </div>
-        <div className="mt-2 flex items-center rounded-md py-2 text-sm font-medium text-app-ink">
-          <FaSearch className="mr-2 scale-x-[-1]" />
+        <div className="flex items-center gap-2 rounded-md text-sm font-medium text-app-ink">
+          <FaSearch className="scale-x-[-1]" />
           <span>Hitta ett recept</span>
         </div>
-        {listSuccessMessage && (
-          <p role="status" className="mb-2 text-sm text-app-ink">
-            {listSuccessMessage}
-          </p>
-        )}
         <input
-          className="mb-2 w-full rounded-md bg-white/90 px-3 py-2 text-app-subtle outline-1 -outline-offset-1 outline-brand-olive focus:outline-2 focus:-outline-offset-2 focus:outline-brand-tomato"
+          className="w-full rounded-md bg-white/90 px-3 py-2 text-app-subtle outline-1 -outline-offset-1 outline-brand-olive focus:outline-2 focus:-outline-offset-2 focus:outline-brand-tomato"
           type="text"
           placeholder="Sök recept..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        {listSuccessMessage && (
+          <p role="status" className="text-sm text-app-ink">
+            {listSuccessMessage}
+          </p>
+        )}
       </section>
-      <section className="mt-2 w-full min-w-0 max-w-full overflow-visible">
+      <section className="flex w-full min-w-0 max-w-full flex-col gap-4 overflow-visible">
         {loading ? (
           <LoadingSpinner label="Hämtar recept..." className="app-content-enter min-h-40" />
         ) : errorMessage ? (
-          <p role="alert" className="mt-4 text-action-danger-text">{errorMessage}</p>
+          <p role="alert" className="text-action-danger-text">{errorMessage}</p>
         ) : filteredRecipes.length > 0 ? (
           <div className="app-content-enter">
             <ScrollableListCard
@@ -184,7 +184,7 @@ export default function AllRecipesPage() {
             />
           </div>
         ) : (
-          <p className="mt-4 text-app-ink">
+          <p className="text-app-ink">
             {recipes.length === 0 ? "Du har inga sparade recept ännu." : "Inga recept matchar sökningen."}
           </p>
         )}
@@ -192,37 +192,37 @@ export default function AllRecipesPage() {
       {showDeleteConfirmation && (
         <Modal
           labelledBy="delete-recipes-title"
-          className="w-full max-w-md rounded-lg bg-app-canvas p-6 text-left text-app-ink shadow-xl"
+          className="flex w-full max-w-md flex-col gap-4 rounded-lg bg-app-canvas p-6 text-left text-app-ink shadow-xl"
           isClosing={isClosingDeleteConfirmation}
           onCloseComplete={() => setShowDeleteConfirmation(false)}
         >
-            <h2 id="delete-recipes-title" className="mb-3 text-xl font-semibold">
-              Radera valda recept?
-            </h2>
-            <p className="mb-5">
-              Är du säker på att du vill radera{" "}
-              {selectedRecipeIds.size === 1 ? "det här receptet" : `${selectedRecipeIds.size} valda recept`}?
-              {" "}Åtgärden går inte att ångra.
-            </p>
-            {deleteErrorMessage && (
-              <p role="alert" className="mb-4 text-sm text-action-danger-text">{deleteErrorMessage}</p>
-            )}
-            <div className="flex justify-end gap-3">
-              <GenericButton
-                variant="neutral"
-                label="Avbryt"
-                onClick={requestCloseDeleteConfirmation}
-                disabled={deletingRecipes}
-              />
-              <GenericButton
-                variant="danger"
-                label={deletingRecipes ? "Raderar..." : "Radera recept"}
-                icon={<IoTrashBin aria-hidden="true" />}
-                onClick={handleDeleteSelectedRecipes}
-                disabled={deletingRecipes}
-                disabledCursor="wait"
-              />
-            </div>
+          <h2 id="delete-recipes-title" className="text-xl font-semibold">
+            Radera valda recept?
+          </h2>
+          <p>
+            Är du säker på att du vill radera{" "}
+            {selectedRecipeIds.size === 1 ? "det här receptet" : `${selectedRecipeIds.size} valda recept`}?
+            {" "}Åtgärden går inte att ångra.
+          </p>
+          {deleteErrorMessage && (
+            <p role="alert" className="text-sm text-action-danger-text">{deleteErrorMessage}</p>
+          )}
+          <div className="flex justify-end gap-3">
+            <GenericButton
+              variant="neutral"
+              label="Avbryt"
+              onClick={requestCloseDeleteConfirmation}
+              disabled={deletingRecipes}
+            />
+            <GenericButton
+              variant="danger"
+              label={deletingRecipes ? "Raderar..." : "Radera recept"}
+              icon={<IoTrashBin aria-hidden="true" />}
+              onClick={handleDeleteSelectedRecipes}
+              disabled={deletingRecipes}
+              disabledCursor="wait"
+            />
+          </div>
         </Modal>
       )}
       {recipeForLists && (
